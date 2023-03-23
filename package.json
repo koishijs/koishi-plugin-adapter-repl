@@ -1,6 +1,6 @@
 {
   "name": "koishi-plugin-adapter-repl",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "REPL adapter for Koishi",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",

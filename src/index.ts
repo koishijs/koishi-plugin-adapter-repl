@@ -63,6 +63,10 @@ export class ReplAdapter extends Adapter.Server<ReplBot> {
         userId: 'repl',
         channelId: 'repl',
         content: line,
+        author: {
+          username: 'repl',
+          userId: 'repl',
+        },
       })
       this.bots[0].dispatch(session)
     })
