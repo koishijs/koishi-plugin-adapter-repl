@@ -8,11 +8,11 @@ export default class ReplAdapter extends Adapter.Server<ReplBot> {
     // output: process.stdout,
   })
 
-  async start() {
+  async start(bot: ReplBot) {
     process.stdout.write('> ')
     this.rl.on('line', (line) => {
       process.stdout.write('> ')
-      const session = this.bots[0].session({
+      const session = bot.session({
         type: 'message',
         subtype: 'private',
         isDirect: true,
@@ -25,7 +25,7 @@ export default class ReplAdapter extends Adapter.Server<ReplBot> {
           userId: 'repl',
         },
       })
-      this.bots[0].dispatch(session)
+      bot.dispatch(session)
     })
   }
 

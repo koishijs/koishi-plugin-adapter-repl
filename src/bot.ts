@@ -7,6 +7,8 @@ class ReplBot extends Bot {
 
   constructor(ctx: Context, config: ReplBot.Config) {
     super(ctx, config)
+    this.platform = 'repl'
+    this.selfId = 'koishi'
     ctx.plugin(ReplAdapter, this)
   }
 
