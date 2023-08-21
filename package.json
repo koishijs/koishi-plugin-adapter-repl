@@ -1,6 +1,6 @@
 {
   "name": "koishi-plugin-adapter-repl",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "REPL adapter for Koishi",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
@@ -44,11 +44,11 @@
     "atsc": "^1.2.2",
     "esbuild": "^0.18.14",
     "esbuild-register": "^3.4.2",
-    "koishi": "^4.14.0",
+    "koishi": "^4.14.1",
     "typescript": "^5.1.6",
     "yml-register": "^1.1.0"
   },
   "peerDependencies": {
-    "koishi": "^4.14.0"
+    "koishi": "^4.14.1"
   }
 }
