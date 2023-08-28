@@ -40,6 +40,7 @@
   },
   "devDependencies": {
     "@koishijs/plugin-help": "^2.3.0",
+    "@types/intercept-stdout": "^0.1.0",
     "@types/node": "^20.4.4",
     "atsc": "^1.2.2",
     "esbuild": "^0.18.14",
@@ -50,5 +51,9 @@
   },
   "peerDependencies": {
     "koishi": "^4.14.1"
+  },
+  "dependencies": {
+    "ansi-escapes": "^6.2.0",
+    "intercept-stdout": "^0.1.2"
   }
 }
