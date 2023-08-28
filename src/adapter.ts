@@ -21,10 +21,7 @@ export default class ReplAdapter extends Adapter.Server<ReplBot> {
       const cmdStr = this.linePrefixed
 
       // 如果输出是ansi控制字符/回车键，不做特殊处理
-      if (
-        (trimmedText.startsWith('\u001B[') || trimmedText === '\n') &&
-        trimmedText !== cmdStr
-      ) {
+      if ((trimmedText.startsWith('\u001B[') || trimmedText === '\n') && trimmedText !== cmdStr) {
         return
       }
 
@@ -63,21 +60,11 @@ export default class ReplAdapter extends Adapter.Server<ReplBot> {
     process.stdin.on('keypress', (str, key) => {
       if (key.name === 'backspace') {
         if (this.line.length <= 0) return
-        process.stdout.write(
-          ansi.cursorLeft +
-            ansi.cursorPrevLine +
-            ansi.eraseDown +
-            this.linePrefixed
-        )
+        process.stdout.write(ansi.cursorLeft + ansi.cursorPrevLine + ansi.eraseDown + this.linePrefixed)
       } else if (key.ctrl && key.name === 'c') {
         this.write(ansi.cursorLeft + ansi.cursorNextLine + '\n\nBye~\n\n')
         process.exit(0)
-      } else if (
-        !key.ctrl &&
-        !key.meta &&
-        key.name !== 'enter' &&
-        key.name !== 'return'
-      ) {
+      } else if (!key.ctrl && !key.meta && key.name !== 'enter' && key.name !== 'return') {
         process.stdout.write(ansi.eraseEndLine + str)
       }
     })
@@ -94,6 +81,7 @@ export default class ReplAdapter extends Adapter.Server<ReplBot> {
   get line() {
     return this.rl.line
   }
+
   get linePrefixed() {
     return `${this.PROMPT_PREFIX}${this.line}`
   }
