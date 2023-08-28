@@ -15,13 +15,6 @@ export default class ReplAdapter extends Adapter.Server<ReplBot> {
   async start(bot: ReplBot) {
     this.write(this.linePrefixed)
 
-    // TODO: 我们似乎并不期望 REPL 关闭时退出整个进程，因为它可能是被 plugin-console 卸载的
-    //       目前的话会需要按两次 Ctrl+C 才能退出，但其他方面姑且没发现问题，所以暂时先这样吧
-    // this.rl.on('close', () => {
-    //   this.write(ansi.cursorLeft + ansi.cursorNextLine + '\n\nBye~\n\n')
-    //   process.exit(0)
-    // })
-
     // 拦截输出，确保用户输入行被置于最后一行
     intercept((text) => {
       const trimmedText = text.trim()
@@ -76,6 +69,9 @@ export default class ReplAdapter extends Adapter.Server<ReplBot> {
             ansi.eraseDown +
             this.linePrefixed
         )
+      } else if (key.ctrl && key.name === 'c') {
+        this.write(ansi.cursorLeft + ansi.cursorNextLine + '\n\nBye~\n\n')
+        process.exit(0)
       } else if (
         !key.ctrl &&
         !key.meta &&
