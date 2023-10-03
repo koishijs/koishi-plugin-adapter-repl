@@ -4,7 +4,7 @@ import intercept from 'intercept-stdout'
 import readline from 'node:readline'
 import ReplBot from './bot'
 
-export default class ReplAdapter extends Adapter.Server<ReplBot> {
+export default class ReplAdapter extends Adapter<ReplBot> {
   PROMPT_PREFIX = '> '
 
   readonly rl = readline.createInterface({
@@ -12,7 +12,7 @@ export default class ReplAdapter extends Adapter.Server<ReplBot> {
     output: process.stdout,
   })
 
-  async start(bot: ReplBot) {
+  async connect(bot: ReplBot) {
     this.write(this.linePrefixed)
 
     // 拦截输出，确保用户输入行被置于最后一行
@@ -40,19 +40,12 @@ export default class ReplAdapter extends Adapter.Server<ReplBot> {
     this.rl.on('line', (line) => {
       this.write(ansi.cursorLeft + ansi.cursorPrevLine + ansi.eraseDown)
       console.info(`[REPL] YOU`, '>', line)
-      const session = bot.session({
-        type: 'message',
-        subtype: 'private',
-        isDirect: true,
-        platform: 'repl',
-        userId: 'repl',
-        channelId: 'repl',
-        content: line,
-        author: {
-          username: 'repl',
-          userId: 'repl',
-        },
-      })
+      const session = bot.session()
+      session.type = 'message'
+      session.isDirect = true
+      session.userId = 'repl'
+      session.channelId = 'repl'
+      session.content = line
       bot.dispatch(session)
     })
 
@@ -70,7 +63,7 @@ export default class ReplAdapter extends Adapter.Server<ReplBot> {
     })
   }
 
-  async stop() {
+  async disconnect() {
     this.rl.close()
   }
 
