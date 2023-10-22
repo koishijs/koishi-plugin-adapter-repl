@@ -1,10 +1,10 @@
-import { Adapter } from 'koishi'
+import { Adapter, Context } from 'koishi'
 import ansi from 'ansi-escapes'
 import intercept from 'intercept-stdout'
 import readline from 'node:readline'
 import ReplBot from './bot'
 
-export default class ReplAdapter extends Adapter<ReplBot> {
+export default class ReplAdapter<C extends Context = Context> extends Adapter<C, ReplBot<C>> {
   PROMPT_PREFIX = '> '
 
   readonly rl = readline.createInterface({
@@ -12,7 +12,7 @@ export default class ReplAdapter extends Adapter<ReplBot> {
     output: process.stdout,
   })
 
-  async connect(bot: ReplBot) {
+  async connect(bot: ReplBot<C>) {
     this.write(this.linePrefixed)
 
     // 拦截输出，确保用户输入行被置于最后一行

@@ -1,10 +1,10 @@
 import { Bot, Context, h, Schema } from 'koishi'
 import ReplAdapter from './adapter'
 
-class ReplBot extends Bot {
+class ReplBot<C extends Context = Context> extends Bot<C> {
   hidden = true
 
-  constructor(ctx: Context, config: ReplBot.Config) {
+  constructor(ctx: C, config: ReplBot.Config) {
     super(ctx, config as any)
     this.platform = 'repl'
     this.selfId = 'koishi'
